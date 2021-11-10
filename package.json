@@ -18,7 +18,8 @@
     "lint": "eslint '*/**/*.{js,ts,tsx}'",
     "lint:fix": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix",
     "depcheck": "depcheck",
-    "pre-commit": "lint-staged",
+    "pre-commit": "depcheck && lint-staged",
+    "pre-push": "npm test",
     "postinstall": "husky install",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
@@ -26,6 +27,7 @@
     "version": "npm run format && git add -A src",
     "postversion": "git push && git push --tags"
   },
+  "dependencies": {},
   "devDependencies": {
     "@types/eslint": "^7.28.2",
     "@types/jest": "^27.0.2",
@@ -35,6 +37,7 @@
     "depcheck": "^1.4.2",
     "eslint": "^8.2.0",
     "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^15.0.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-jest": "^25.2.4",
@@ -49,7 +52,10 @@
   "files": [
     "dist/**/*"
   ],
-  "dependencies": {
-    "eslint-config-airbnb-typescript": "^15.0.0"
+  "lint-staged": {
+    "**/*.ts": [
+      "npm run format",
+      "npm run lint"
+    ]
   }
 }
